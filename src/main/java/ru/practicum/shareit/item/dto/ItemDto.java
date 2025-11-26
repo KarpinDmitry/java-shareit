@@ -11,7 +11,7 @@ import lombok.NonNull;
 @AllArgsConstructor
 public class ItemDto {
     @NonNull
-    Integer id;
+    private Integer id;
     @NonNull
     private String name;
     @NonNull
