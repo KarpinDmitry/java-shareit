@@ -1,10 +1,10 @@
-package ru.practicum.shareit.item.model;
+package ru.practicum.shareit.user.model;
 
+import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
-import ru.practicum.shareit.request.ItemRequest;
 
 /**
  * TODO Sprint add-controllers.
@@ -12,14 +12,11 @@ import ru.practicum.shareit.request.ItemRequest;
 @Getter
 @Setter
 @AllArgsConstructor
-public class Item {
+public class User {
     private Integer id;
     @NonNull
     private String name;
+    @Email(message = "Некорректный адрес электронной почты")
     @NonNull
-    private String description;
-    private Boolean available;
-    @NonNull
-    private Integer owner;
-    private ItemRequest request;
+    private String email;
 }
