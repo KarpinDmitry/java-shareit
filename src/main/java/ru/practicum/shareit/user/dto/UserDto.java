@@ -8,7 +8,7 @@ import lombok.NonNull;
 @AllArgsConstructor
 public class UserDto {
     @NonNull
-    Integer id;
+    private Long id;
     @NonNull
     private String name;
     @NonNull

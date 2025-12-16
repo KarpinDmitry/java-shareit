@@ -21,7 +21,7 @@ public class GlobalExceptionHandler {
                 .map(error -> error.getField() + ": " + error.getDefaultMessage())
                 .collect(Collectors.joining(", "));
 
-        return ResponseEntity.badRequest().body(new ErrorResponse(errorMessage));
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse(errorMessage));
     }
 
     @ExceptionHandler(IllegalOwnerException.class)
