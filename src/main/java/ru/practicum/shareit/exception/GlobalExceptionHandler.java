@@ -49,6 +49,13 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(new ErrorResponse(exception.getMessage()));
     }
 
+    @ExceptionHandler(CreateCommentException.class)
+    public ResponseEntity<ErrorResponse> handleCreateCommentException(CreateCommentException exception) {
+        log.warn("Ошибка создания коммента: {}", exception.getMessage());
+
+        return ResponseEntity.badRequest().body(new ErrorResponse(exception.getMessage()));
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleGeneralException(Exception ex) {
         log.error("Непредвиденная ошибка: ", ex);

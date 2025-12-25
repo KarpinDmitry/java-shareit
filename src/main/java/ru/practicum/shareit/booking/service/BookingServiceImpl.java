@@ -51,7 +51,7 @@ public class BookingServiceImpl implements BookingService {
             throw new ValidationException("Дата окончания должна быть позже даты начала");
         }
 
-        Booking booking = BookingMapper.toBooking(createBookingDto, bookerId);
+        Booking booking = BookingMapper.toBooking(createBookingDto, user, item);
 
         booking.setStatus(BookingStatus.WAITING);
 
@@ -70,9 +70,8 @@ public class BookingServiceImpl implements BookingService {
             throw new ValidationException("Нельзя подтвердить бронирование, которое уже обработано");
         }
 
-        Item item = itemRepository.findById(booking.getItemId())
-                .orElseThrow(() -> new NotFoundIdException("Item с id: "
-                        + booking.getItemId() + "не найден"));
+        Item item = booking.getItem();
+
         if (!item.getOwnerId().equals(ownerId)){
             throw new ValidationException("Подтвердить бронь может только владелец");
         }
@@ -87,7 +86,7 @@ public class BookingServiceImpl implements BookingService {
 
         ItemForBookingDto itemForBookingDto = BookingMapper.toItemForBookingDto(item);
 
-        BookerDto bookerDto = BookingMapper.toBookerDto(booking.getBookerId());
+        BookerDto bookerDto = BookingMapper.toBookerDto(booking.getBooker());
 
         return BookingMapper.toResponseBookingDto(booking, bookerDto, itemForBookingDto);
     }
@@ -97,18 +96,16 @@ public class BookingServiceImpl implements BookingService {
         Booking booking = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new NotFoundIdException("Id bookingId: " + bookingId + " not found"));
 
-        Item item = itemRepository.findById(booking.getItemId())
-                .orElseThrow(() -> new NotFoundIdException("Item с id: "
-                        + booking.getItemId() + "не найден"));
+        Item item = booking.getItem();
 
-        if (!booking.getBookerId().equals(userId) && !item.getOwnerId().equals(userId)){
+        if (!booking.getBooker().getId().equals(userId) && !item.getOwnerId().equals(userId)) {
             throw new IllegalOwnerException("Получить данные о бронировании может "
                     + "только владелец вещи или бронирования");
         }
 
         ItemForBookingDto itemForBookingDto = BookingMapper.toItemForBookingDto(item);
 
-        BookerDto bookerDto = BookingMapper.toBookerDto(booking.getBookerId());
+        BookerDto bookerDto = BookingMapper.toBookerDto(booking.getBooker());
 
         return BookingMapper.toResponseBookingDto(booking, bookerDto, itemForBookingDto);
     }
@@ -136,13 +133,11 @@ public class BookingServiceImpl implements BookingService {
         List<ResponseBookingDto> result = new ArrayList<>();
 
         for (Booking booking: bookingList){
-            Item item = itemRepository.findById(booking.getItemId())
-                    .orElseThrow(() -> new NotFoundIdException("Item с id: "
-                            + booking.getItemId() + "не найден"));
+            Item item = booking.getItem();
 
             ItemForBookingDto itemForBookingDto = BookingMapper.toItemForBookingDto(item);
 
-            BookerDto bookerDto = BookingMapper.toBookerDto(booking.getBookerId());
+            BookerDto bookerDto = BookingMapper.toBookerDto(booking.getBooker());
 
             result.add(BookingMapper.toResponseBookingDto(booking, bookerDto, itemForBookingDto));
         }
@@ -192,13 +187,11 @@ public class BookingServiceImpl implements BookingService {
         List<ResponseBookingDto> result = new ArrayList<>();
 
         for (Booking booking: bookingList){
-            Item item = itemRepository.findById(booking.getItemId())
-                    .orElseThrow(() -> new NotFoundIdException("Item с id: "
-                            + booking.getItemId() + "не найден"));
+            Item item = booking.getItem();
 
             ItemForBookingDto itemForBookingDto = BookingMapper.toItemForBookingDto(item);
 
-            BookerDto bookerDto = BookingMapper.toBookerDto(booking.getBookerId());
+            BookerDto bookerDto = BookingMapper.toBookerDto(booking.getBooker());
 
             result.add(BookingMapper.toResponseBookingDto(booking, bookerDto, itemForBookingDto));
         }

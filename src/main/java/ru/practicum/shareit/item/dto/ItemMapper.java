@@ -2,7 +2,10 @@ package ru.practicum.shareit.item.dto;
 
 import lombok.experimental.UtilityClass;
 import ru.practicum.shareit.booking.model.Booking;
+import ru.practicum.shareit.item.comments.dto.ResponseCommentDto;
 import ru.practicum.shareit.item.model.Item;
+
+import java.util.List;
 
 @UtilityClass
 public class ItemMapper {
@@ -41,7 +44,20 @@ public class ItemMapper {
         return item;
     }
 
-    private static BookingForItemDto toBookingForItemDto(Booking booking){
-        return new BookingForItemDto(booking.getId(), booking.getBookerId());
+    public static ResponseItemDto toResponseItemDto(Item item, BookingForItemDto last,
+                                                    BookingForItemDto next, List<ResponseCommentDto> comments) {
+        return new ResponseItemDto(
+                item.getId(),
+                item.getName(),
+                item.getDescription(),
+                item.getAvailable(),
+                last,
+                next,
+                comments);
     }
+
+    public static BookingForItemDto toBookingForItemDto(Booking booking) {
+        return new BookingForItemDto(booking.getId(), booking.getBooker().getId());
+    }
+
 }

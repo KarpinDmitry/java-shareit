@@ -1,6 +1,12 @@
 package ru.practicum.shareit.item.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import ru.practicum.shareit.item.comments.dto.ResponseCommentDto;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -13,4 +19,5 @@ public class ResponseItemDto {
     private Boolean available;
     private BookingForItemDto lastBooking;
     private BookingForItemDto nextBooking;
+    private List<ResponseCommentDto> comments;
 }
