@@ -1,8 +1,7 @@
 package ru.practicum.shareit.item.model;
 
-import jakarta.persistence.Entity;
-import lombok.*;
 import jakarta.persistence.*;
+import lombok.*;
 
 @Getter
 @Setter

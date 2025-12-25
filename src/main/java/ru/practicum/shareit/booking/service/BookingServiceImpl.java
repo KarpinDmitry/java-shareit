@@ -36,11 +36,11 @@ public class BookingServiceImpl implements BookingService {
                 .orElseThrow(() -> new NotFoundIdException("Item с id: "
                         + createBookingDto.getItemId() + " не найден"));
 
-        if (item.getOwnerId().equals(bookerId)){
+        if (item.getOwnerId().equals(bookerId)) {
             throw new ValidationException("Нельзя забронировать собственную вещь");
         }
 
-        if (!item.getAvailable()){
+        if (!item.getAvailable()) {
             throw new ValidationException("Вещь недоступна для бронирования");
         }
 
@@ -72,11 +72,11 @@ public class BookingServiceImpl implements BookingService {
 
         Item item = booking.getItem();
 
-        if (!item.getOwnerId().equals(ownerId)){
+        if (!item.getOwnerId().equals(ownerId)) {
             throw new ValidationException("Подтвердить бронь может только владелец");
         }
 
-        if (approved){
+        if (approved) {
             booking.setStatus(BookingStatus.APPROVED);
         } else {
             booking.setStatus(BookingStatus.REJECTED);
@@ -116,7 +116,7 @@ public class BookingServiceImpl implements BookingService {
                 .orElseThrow(() -> new NotFoundIdException("Пользователь с Id: " + userId + " не найден"));
 
         List<Booking> bookingList;
-        if (state.equals(BookingState.ALL)){
+        if (state.equals(BookingState.ALL)) {
             bookingList = bookingRepository.findByBookerIdOrderByStartDesc(userId);
         } else if (state.equals(BookingState.REJECTED)) {
             bookingList = bookingRepository.findBookingsByUserAndStatus(userId, BookingStatus.REJECTED);
@@ -124,7 +124,7 @@ public class BookingServiceImpl implements BookingService {
             bookingList = bookingRepository.findByBookerIdAndStartBeforeAndEndAfter(userId, LocalDateTime.now());
         } else if (state.equals(BookingState.PAST)) {
             bookingList = bookingRepository.findByBookerIdAndEndBefore(userId, LocalDateTime.now());
-        } else if (state.equals(BookingState.FUTURE)){
+        } else if (state.equals(BookingState.FUTURE)) {
             bookingList = bookingRepository.findByBookerIdAndStartAfter(userId, LocalDateTime.now());
         } else {
             bookingList = bookingRepository.findBookingsByUserAndStatus(userId, BookingStatus.WAITING);
@@ -132,7 +132,7 @@ public class BookingServiceImpl implements BookingService {
 
         List<ResponseBookingDto> result = new ArrayList<>();
 
-        for (Booking booking: bookingList){
+        for (Booking booking : bookingList) {
             Item item = booking.getItem();
 
             ItemForBookingDto itemForBookingDto = BookingMapper.toItemForBookingDto(item);
@@ -154,14 +154,14 @@ public class BookingServiceImpl implements BookingService {
 
         List<Long> itemIdList = itemList.stream().map(Item::getId).toList();
 
-        if (itemList.isEmpty()){
+        if (itemList.isEmpty()) {
             return new ArrayList<>();
         }
 
         List<Booking> bookingList;
         LocalDateTime now = LocalDateTime.now();
 
-        switch (state){
+        switch (state) {
             case ALL:
                 bookingList = bookingRepository.findByItemIdsOrderByStartDesc(itemIdList);
                 break;
@@ -186,7 +186,7 @@ public class BookingServiceImpl implements BookingService {
 
         List<ResponseBookingDto> result = new ArrayList<>();
 
-        for (Booking booking: bookingList){
+        for (Booking booking : bookingList) {
             Item item = booking.getItem();
 
             ItemForBookingDto itemForBookingDto = BookingMapper.toItemForBookingDto(item);

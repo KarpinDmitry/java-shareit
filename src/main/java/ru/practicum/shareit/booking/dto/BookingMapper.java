@@ -17,7 +17,7 @@ public class BookingMapper {
         return booking;
     }
 
-    public static BookingDto toBookingDto(Booking booking){
+    public static BookingDto toBookingDto(Booking booking) {
         return new BookingDto(
                 booking.getId(),
                 booking.getStart(),
@@ -29,7 +29,7 @@ public class BookingMapper {
 
     }
 
-    public static ResponseBookingDto toResponseBookingDto(Booking booking, BookerDto bookerDto, ItemForBookingDto item){
+    public static ResponseBookingDto toResponseBookingDto(Booking booking, BookerDto bookerDto, ItemForBookingDto item) {
         return new ResponseBookingDto(
                 booking.getId(),
                 booking.getStart(),
@@ -40,15 +40,15 @@ public class BookingMapper {
         );
     }
 
-    public static ItemForBookingDto toItemForBookingDto(Item item){
+    public static ItemForBookingDto toItemForBookingDto(Item item) {
         return new ItemForBookingDto(item.getId(), item.getName());
     }
 
-    public static BookerDto toBookerDto(User user){
+    public static BookerDto toBookerDto(User user) {
         return new BookerDto(user.getId());
     }
 
-    public static BookerDto toBookerDto(Long userId){
+    public static BookerDto toBookerDto(Long userId) {
         return new BookerDto(userId);
     }
 }
