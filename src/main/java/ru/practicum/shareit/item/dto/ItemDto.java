@@ -11,11 +11,11 @@ import lombok.NonNull;
 @AllArgsConstructor
 public class ItemDto {
     @NonNull
-    private Integer id;
+    private Long id;
     @NonNull
     private String name;
     @NonNull
     private String description;
-    private boolean available;
-    private Integer requestId;
+    private Boolean available;
+    private Long requestId;
 }

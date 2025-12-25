@@ -21,7 +21,7 @@ public class GlobalExceptionHandler {
                 .map(error -> error.getField() + ": " + error.getDefaultMessage())
                 .collect(Collectors.joining(", "));
 
-        return ResponseEntity.badRequest().body(new ErrorResponse(errorMessage));
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse(errorMessage));
     }
 
     @ExceptionHandler(IllegalOwnerException.class)
@@ -45,6 +45,13 @@ public class GlobalExceptionHandler {
         if (exception.getMessage().contains("already exists")) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(new ErrorResponse(exception.getMessage()));
         }
+
+        return ResponseEntity.badRequest().body(new ErrorResponse(exception.getMessage()));
+    }
+
+    @ExceptionHandler(CreateCommentException.class)
+    public ResponseEntity<ErrorResponse> handleCreateCommentException(CreateCommentException exception) {
+        log.warn("Ошибка создания коммента: {}", exception.getMessage());
 
         return ResponseEntity.badRequest().body(new ErrorResponse(exception.getMessage()));
     }

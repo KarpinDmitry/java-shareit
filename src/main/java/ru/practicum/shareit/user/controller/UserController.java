@@ -30,7 +30,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDto> getUserById(@PathVariable Integer id) {
+    public ResponseEntity<UserDto> getUserById(@PathVariable Long id) {
         log.info("Запрос на получения пользователя с id: {}", id);
         return ResponseEntity.ok(userService.getUserById(id));
     }
@@ -45,13 +45,13 @@ public class UserController {
 
     @PatchMapping("/{id}")
     public ResponseEntity<UserDto> updateUser(@Valid @RequestBody UpdateUserDto updateUserDto,
-                                              @PathVariable Integer id) {
+                                              @PathVariable Long id) {
         log.info("Запрос на обновление пользователя {}", updateUserDto.toString());
         return ResponseEntity.ok(userService.updateUser(updateUserDto, id));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Integer id) {
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         log.info("Запрос на удаление пользователя c id: {}", id);
         userService.deleteUser(id);
         return ResponseEntity.noContent().build();
