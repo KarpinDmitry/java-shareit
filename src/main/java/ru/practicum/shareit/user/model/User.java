@@ -1,22 +1,24 @@
 package ru.practicum.shareit.user.model;
 
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
+import lombok.*;
 
-/**
- * TODO Sprint add-controllers.
- */
 @Getter
 @Setter
 @AllArgsConstructor
+@Entity
+@NoArgsConstructor
+@Table(name = "users")
 public class User {
-    private Integer id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     @NonNull
+    @Column(nullable = false)
     private String name;
     @Email(message = "Некорректный адрес электронной почты")
     @NonNull
+    @Column(nullable = false, unique = true)
     private String email;
 }

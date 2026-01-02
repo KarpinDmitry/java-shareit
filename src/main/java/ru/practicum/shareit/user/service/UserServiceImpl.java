@@ -18,13 +18,13 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     public List<UserDto> getUsers() {
-        return userRepository.getUsers()
+        return userRepository.findAll()
                 .stream().map(UserMapper::toUserDto).toList();
     }
 
     @Override
-    public UserDto getUserById(Integer id) {
-        User user = userRepository.getUserById(id)
+    public UserDto getUserById(Long id) {
+        User user = userRepository.findById(id)
                 .orElseThrow(() -> new NotFoundIdException("Id: " + id + " not found"));
         return UserMapper.toUserDto(user);
     }
@@ -36,12 +36,12 @@ public class UserServiceImpl implements UserService {
         }
 
         User user = UserMapper.toUser(createUserDto);
-        return UserMapper.toUserDto(userRepository.createUser(user));
+        return UserMapper.toUserDto(userRepository.save(user));
     }
 
     @Override
-    public UserDto updateUser(UpdateUserDto updateUserDto, Integer id) {
-        User user = userRepository.getUserById(id)
+    public UserDto updateUser(UpdateUserDto updateUserDto, Long id) {
+        User user = userRepository.findById(id)
                 .orElseThrow(() -> new NotFoundIdException("User with id: " + id + "not found"));
 
         if (userRepository.findByEmail(updateUserDto.getEmail()).isPresent()) {
@@ -49,11 +49,11 @@ public class UserServiceImpl implements UserService {
         }
 
         User updateUser = UserMapper.toUser(updateUserDto, user);
-        return UserMapper.toUserDto(userRepository.updateUser(updateUser));
+        return UserMapper.toUserDto(userRepository.save(updateUser));
     }
 
     @Override
-    public void deleteUser(Integer id) {
-        userRepository.deleteUser(id);
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id);
     }
 }
