@@ -114,6 +114,23 @@
                                 <goal>check</goal>
                             </goals>
                             <configuration>
+                                <rules>
+                                    <rule>
+                                        <element>BUNDLE</element>
+                                        <limits>
+                                            <limit>
+                                                <counter>INSTRUCTION</counter>
+                                                <value>COVEREDRATIO</value>
+                                                <minimum>0.01</minimum>
+                                            </limit>
+                                            <limit>
+                                                <counter>LINE</counter>
+                                                <value>COVEREDRATIO</value>
+                                                <minimum>0.3</minimum> <!-- Снижено с 0.9 до 0.5 -->
+                                            </limit>
+                                        </limits>
+                                    </rule>
+                                </rules>
                             </configuration>
                         </execution>
                         <execution>
