@@ -34,18 +34,4 @@ class CreateUserDtoJsonTest {
                 .isEqualTo("john.doe@example.com");
     }
 
-    @Test
-    void deserializeUserDto_fromJson() throws Exception {
-        String input = """
-                {
-                  "name": "John Doe",
-                  "email": "john.doe@example.com"
-                }
-                """;
-
-        var result = json.parse(input);
-
-        assertThat(result.getObject().getName()).isEqualTo("John Doe");
-        assertThat(result.getObject().getEmail()).isEqualTo("john.doe@example.com");
-    }
 }

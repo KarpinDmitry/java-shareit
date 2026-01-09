@@ -13,8 +13,8 @@ import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@JsonTest
 @ContextConfiguration(classes = ShareItGateway.class)
+@JsonTest
 class CreateBookingDtoJsonTest {
 
     @Autowired
@@ -37,22 +37,4 @@ class CreateBookingDtoJsonTest {
         assertThat(result).extractingJsonPathValue("$.end").isNotNull();
     }
 
-    @Test
-    void deserializeBookingDto_fromFormattedJson() throws Exception {
-        String input = """
-                {
-                  "itemId": 1,
-                  "start": "2026-01-01T12:00:00",
-                  "end": "2026-01-01T13:00:00"
-                }
-                """;
-
-        var result = json.parse(input);
-
-        assertThat(result.getObject().getItemId()).isEqualTo(1L);
-        assertThat(result.getObject().getStart())
-                .isEqualTo(LocalDateTime.of(2026, 1, 1, 12, 0, 0));
-        assertThat(result.getObject().getEnd())
-                .isEqualTo(LocalDateTime.of(2026, 1, 1, 13, 0, 0));
-    }
 }

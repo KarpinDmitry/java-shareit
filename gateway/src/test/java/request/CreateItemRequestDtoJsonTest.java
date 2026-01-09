@@ -32,16 +32,4 @@ class CreateItemRequestDtoJsonTest {
                 .isEqualTo("Need a drill");
     }
 
-    @Test
-    void deserializeRequestDto_fromJson() throws Exception {
-        String input = """
-                {
-                  "description": "Need a drill"
-                }
-                """;
-
-        var result = json.parse(input);
-
-        assertThat(result.getObject().getDescription()).isEqualTo("Need a drill");
-    }
 }

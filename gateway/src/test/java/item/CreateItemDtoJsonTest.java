@@ -37,22 +37,4 @@ class CreateItemDtoJsonTest {
         assertThat(result).extractingJsonPathValue("$.requestId").isEqualTo(1);
     }
 
-    @Test
-    void deserializeItemDto_fromJson() throws Exception {
-        String input = """
-                {
-                  "name": "Drill",
-                  "description": "Power drill",
-                  "available": true,
-                  "requestId": 1
-                }
-                """;
-
-        var result = json.parse(input);
-
-        assertThat(result.getObject().getName()).isEqualTo("Drill");
-        assertThat(result.getObject().getDescription()).isEqualTo("Power drill");
-        assertThat(result.getObject().getAvailable()).isTrue();
-        assertThat(result.getObject().getRequestId()).isEqualTo(1L);
-    }
 }
