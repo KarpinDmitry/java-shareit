@@ -28,7 +28,8 @@ class CreateItemRequestDtoJsonTest {
 
         var result = json.write(dto);
 
-        assertThat(result).extractingJsonPathStringValue("$.description").isEqualTo("Need a drill");
+        assertThat(result).extractingJsonPathStringValue("$.description")
+                .isEqualTo("Need a drill");
     }
 
     @Test

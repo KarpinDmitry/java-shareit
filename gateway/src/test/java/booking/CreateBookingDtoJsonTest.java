@@ -50,7 +50,9 @@ class CreateBookingDtoJsonTest {
         var result = json.parse(input);
 
         assertThat(result.getObject().getItemId()).isEqualTo(1L);
-        assertThat(result.getObject().getStart()).isEqualTo(LocalDateTime.of(2026, 1, 1, 12, 0, 0));
-        assertThat(result.getObject().getEnd()).isEqualTo(LocalDateTime.of(2026, 1, 1, 13, 0, 0));
+        assertThat(result.getObject().getStart())
+                .isEqualTo(LocalDateTime.of(2026, 1, 1, 12, 0, 0));
+        assertThat(result.getObject().getEnd())
+                .isEqualTo(LocalDateTime.of(2026, 1, 1, 13, 0, 0));
     }
 }

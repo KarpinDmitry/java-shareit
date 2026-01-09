@@ -30,7 +30,8 @@ class CreateUserDtoJsonTest {
         var result = json.write(dto);
 
         assertThat(result).extractingJsonPathStringValue("$.name").isEqualTo("John Doe");
-        assertThat(result).extractingJsonPathStringValue("$.email").isEqualTo("john.doe@example.com");
+        assertThat(result).extractingJsonPathStringValue("$.email")
+                .isEqualTo("john.doe@example.com");
     }
 
     @Test
